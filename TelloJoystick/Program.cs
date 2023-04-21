@@ -48,80 +48,93 @@ class Program
         
         Tello drone = new Tello();
         drone.Connect();
-        
-        foreach (var state in datas)
-                {
 
-                    if (Convert.ToString(state.Offset) == "X")
-                    {
-                        x = Convert.ToInt32((state.Value - 32511) / 325.11);
-                        if (x > 100) x = 100;
-                    }
-                    else if (Convert.ToString(state.Offset) == "Y")
-                    {
-                        y = Convert.ToInt32((state.Value - 32511) / 325.11);
-                        if (y > 100) y = 100;
-                    }
-                    else if (Convert.ToString(state.Offset) == "RotationZ")
-                    {
-                        z = Convert.ToInt32((state.Value - 32511) / 325.11);
-                        if (z > 100) z = 100;
-                    }
-                    else if (Convert.ToString(state.Offset) == "Buttons4")
-                    {
-                        w = Convert.ToInt32(state.Value);
-                        if (w == 128)
-                        {
-                            w = 40;
-                        }
-                    }
-                    else if (Convert.ToString(state.Offset) == "Buttons2")
-                    {
-                        w = Convert.ToInt32(state.Value);
-                        if (w == 128)
-                        {
-                            w = -40;
-                        }
-                    }
-                    else if (Convert.ToString(state.Offset) == "Buttons5")
-                    {
-                        //ws.Send("toggleTrack");
-                    }
-                    else if (Convert.ToString(state.Offset) == "Buttons3")
-                    {
-                        ws.Send("Land");
-                    }
-                    else if (Convert.ToString(state.Offset) == "PointOfViewControllers0")
-                    {
-                        var val = Convert.ToInt32(state.Value);
-                        Tello.FlipDirection? dir = null;
-                        if (val == 0)
-                        {
-                            dir = Tello.FlipDirection.Forward;
-                        }
-                        else if (val == 27000)
-                        {
-                            dir = Tello.FlipDirection.Left;
-                        }
-                        else if (val == 18000)
-                        {
-                            dir = Tello.FlipDirection.Back;
-                        }
-                        else if (val == 9000)
-                        {
-                            dir = Tello.FlipDirection.Right;
-                        }
-                        if (dir != null)
-                        {
-                            drone.Flip(dir.Value);
-                        }
-                    }
-                    Console.WriteLine(state);
-                    string package = "rc "+Convert.ToString(x)+" "+Convert.ToString(-y)+" "+ Convert.ToString(w)+ " "+ Convert.ToString(z);
-                    //Console.WriteLine(package);
-                    ws.Send(package);
-                    
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        int w = 0;
+        
+        while (true)
+        {
+            
+            joystick.Poll();
+            var datas = joystick.GetBufferedData();
+            
+            foreach (var state in datas)
+            {
+
+                if (Convert.ToString(state.Offset) == "X")
+                { 
+                    x = Convert.ToInt32((state.Value - 32511) / 325.11); 
+                    if (x > 100) x = 100;
                 }
+                else if (Convert.ToString(state.Offset) == "Y")
+                {
+                    y = Convert.ToInt32((state.Value - 32511) / 325.11);
+                    if (y > 100) y = 100;
+                }
+                else if (Convert.ToString(state.Offset) == "RotationZ")
+                {
+                    z = Convert.ToInt32((state.Value - 32511) / 325.11);
+                    if (z > 100) z = 100;
+                }
+                else if (Convert.ToString(state.Offset) == "Buttons4")
+                {
+                    w = Convert.ToInt32(state.Value);
+                    if (w == 128)
+                    {
+                        w = 40;
+                    }
+                }
+                else if (Convert.ToString(state.Offset) == "Buttons2")
+                {
+                    w = Convert.ToInt32(state.Value);
+                    if (w == 128)
+                    {
+                        w = -40;
+                    }
+                }
+                else if (Convert.ToString(state.Offset) == "Buttons5")
+                {
+                        //ws.Send("toggleTrack");
+                }
+                else if (Convert.ToString(state.Offset) == "Buttons3")
+                {
+                    drone.Land();
+                }
+                else if (Convert.ToString(state.Offset) == "PointOfViewControllers0")
+                {
+                    var val = Convert.ToInt32(state.Value);
+                    Tello.FlipDirection? dir = null;
+                    if (val == 0)
+                    {
+                        dir = Tello.FlipDirection.Forward;
+                    }
+                    else if (val == 27000)
+                    {
+                        dir = Tello.FlipDirection.Left;
+                    }
+                    else if (val == 18000)
+                    {
+                        dir = Tello.FlipDirection.Back;
+                    }
+                    else if (val == 9000)
+                    {
+                        dir = Tello.FlipDirection.Right;
+                    }
+                    if (dir != null)
+                    {
+                        drone.Flip(dir.Value);
+                    }
+                }
+                Console.WriteLine(state);
+                string package = "rc "+Convert.ToString(x)+" "+Convert.ToString(-y)+" "+ Convert.ToString(w)+ " "+ Convert.ToString(z);
+                //Console.WriteLine(package);
+                drone.SendCommand(package, false);
+                    
+            }
+        }
+        
         
     }
 }
