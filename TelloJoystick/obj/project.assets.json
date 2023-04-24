@@ -4664,8 +4664,7 @@
     ]
   },
   "packageFolders": {
-    "/home/austind/.nuget/packages/": {},
-    "/home/austind/.local/share/godot/mono/GodotNuGetFallbackFolder": {}
+    "/home/austind/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4676,12 +4675,8 @@
       "packagesPath": "/home/austind/.nuget/packages/",
       "outputPath": "/home/austind/Code/RiderProjects/TelloJoystick/TelloJoystick/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "/home/austind/.local/share/godot/mono/GodotNuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "/home/austind/.nuget/NuGet/NuGet.Config",
-        "/home/austind/.nuget/NuGet/config/Godot.Offline.Config"
+        "/home/austind/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -4734,7 +4729,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
       }
     }
   }
