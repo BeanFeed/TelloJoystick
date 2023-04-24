@@ -128,9 +128,9 @@ class Program
                     }
                 }
                 Console.WriteLine(state);
-                string package = "rc "+Convert.ToString(x)+" "+Convert.ToString(-y)+" "+ Convert.ToString(w)+ " "+ Convert.ToString(z);
+                //string package = "rc "+Convert.ToString(x)+" "+Convert.ToString(-y)+" "+ Convert.ToString(w)+ " "+ Convert.ToString(z);
                 //Console.WriteLine(package);
-                drone.SendCommand(package, false);
+                drone.SendRcControl(x,-y,w,z);
                     
             }
         }
